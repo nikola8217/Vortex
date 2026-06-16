@@ -1,6 +1,6 @@
 package com.vortex.shared.entities;
 
-import com.vortex.shared.entities.enums.WorkerStatus;
+import com.vortex.shared.enums.WorkerStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

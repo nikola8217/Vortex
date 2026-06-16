@@ -1,6 +1,6 @@
 package com.vortex.shared.events;
 
-import com.vortex.shared.entities.enums.WorkerStatus;
+import com.vortex.shared.enums.WorkerStatus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

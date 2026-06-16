@@ -1,4 +1,4 @@
-package com.vortex.shared.entities.enums;
+package com.vortex.shared.enums;
 
 public enum TaskPriority {
     LOW,

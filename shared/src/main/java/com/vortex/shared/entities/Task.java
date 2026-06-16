@@ -1,8 +1,8 @@
 package com.vortex.shared.entities;
 
-import com.vortex.shared.entities.enums.TaskPriority;
-import com.vortex.shared.entities.enums.TaskStatus;
-import com.vortex.shared.entities.enums.TaskType;
+import com.vortex.shared.enums.TaskPriority;
+import com.vortex.shared.enums.TaskStatus;
+import com.vortex.shared.enums.TaskType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
