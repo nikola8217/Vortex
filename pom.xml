@@ -15,7 +15,7 @@
         <module>shared</module>
         <module>scheduler</module>
         <module>worker</module>
-        <module>api</module>
+        <module>task</module>
         <module>observability</module>
     </modules>
 

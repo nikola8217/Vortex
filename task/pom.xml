@@ -10,9 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>api</artifactId>
-    <name>api</name>
-    <description>API — REST controllers</description>
+    <artifactId>task</artifactId>
+    <name>task</name>
+    <description>Task — Task management</description>
 
     <dependencies>
         <dependency>
