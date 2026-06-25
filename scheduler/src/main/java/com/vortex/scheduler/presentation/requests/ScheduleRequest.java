@@ -1,35 +1,34 @@
-package com.vortex.task.presentation.requests;
+package com.vortex.scheduler.presentation.requests;
 
-import com.vortex.task.business.dtos.TaskDto;
-import com.vortex.task.presentation.httpValidation.TaskRequestValidation;
+import com.vortex.scheduler.business.dtos.ScheduleDto;
+import com.vortex.scheduler.presentation.httpValidation.ScheduleRequestValidation;
 import com.vortex.shared.enums.TaskPriority;
 import com.vortex.shared.enums.TaskType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
 @Getter
 @NoArgsConstructor
-public class TaskRequest {
+public class ScheduleRequest {
     private String name;
     private TaskType type;
     private TaskPriority priority;
-    private Map<String, Object> payload;
+    private String cronExpression;
     private int maxRetries;
     private int timeoutSeconds;
-    private String cronExpression;
+    private String payload;
 
-    public TaskDto format() {
-        TaskRequestValidation.validate(this);
-        return new TaskDto(
+    public ScheduleDto format() {
+        ScheduleRequestValidation.validate(this);
+
+        return new ScheduleDto(
                 name,
                 type,
                 priority,
-                payload,
+                cronExpression,
                 maxRetries,
                 timeoutSeconds,
-                cronExpression
+                payload
         );
     }
 }

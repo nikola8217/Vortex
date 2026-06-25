@@ -2,7 +2,7 @@ package com.vortex.task.business.services;
 
 import com.vortex.task.business.dtos.TaskDto;
 import com.vortex.task.business.ports.ITaskRepository;
-import com.vortex.task.exceptions.ApiException;
+import com.vortex.task.exceptions.TaskException;
 import com.vortex.shared.entities.Task;
 import com.vortex.shared.enums.TaskPriority;
 import com.vortex.shared.enums.TaskStatus;
@@ -53,7 +53,7 @@ public class TaskService {
 
     public Task getTask(UUID id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new ApiException("Task not found: " + id, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new TaskException("Task not found: " + id, HttpStatus.NOT_FOUND));
     }
 
     public List<Task> getTasks(TaskStatus status, TaskPriority priority) {
@@ -70,7 +70,7 @@ public class TaskService {
     public void cancelTask(UUID id) {
         Task task = getTask(id);
         if (task.getStatus() == TaskStatus.RUNNING) {
-            throw new ApiException("Cannot cancel a running task", HttpStatus.CONFLICT);
+            throw new TaskException("Cannot cancel a running task", HttpStatus.CONFLICT);
         }
         Task cancelled = Task.builder()
                 .id(task.getId())
@@ -95,7 +95,7 @@ public class TaskService {
     public Task retryTask(UUID id) {
         Task task = getTask(id);
         if (task.getStatus() != TaskStatus.FAILED && task.getStatus() != TaskStatus.DEAD) {
-            throw new ApiException("Only failed or dead tasks can be retried", HttpStatus.CONFLICT);
+            throw new TaskException("Only failed or dead tasks can be retried", HttpStatus.CONFLICT);
         }
 
         Task retried = Task.builder()
