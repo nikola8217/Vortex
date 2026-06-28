@@ -36,6 +36,7 @@ public class TaskModel {
     private TaskStatus status;
 
     @Column(columnDefinition = "jsonb")
+    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.JSON)
     private String payload;
 
     @Column(nullable = false)

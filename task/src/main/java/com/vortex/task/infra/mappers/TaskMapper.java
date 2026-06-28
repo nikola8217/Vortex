@@ -26,7 +26,9 @@ public class TaskMapper {
 
     public TaskModel toModel(Task task) {
         TaskModel model = new TaskModel();
-        model.setId(task.getId());
+        if (task.getId() != null) {
+            model.setId(task.getId());
+        }
         model.setName(task.getName());
         model.setType(task.getType());
         model.setPriority(task.getPriority());

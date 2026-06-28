@@ -1,6 +1,9 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
 
+ENV JAVA_HOME=/opt/java/openjdk
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
 COPY pom.xml .
 COPY shared/pom.xml shared/
 COPY scheduler/pom.xml scheduler/

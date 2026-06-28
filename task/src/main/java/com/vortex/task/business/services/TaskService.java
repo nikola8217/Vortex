@@ -27,7 +27,6 @@ public class TaskService {
 
     public Task submitTask(TaskDto dto) {
         Task task = Task.builder()
-                .id(UUID.randomUUID())
                 .name(dto.name())
                 .type(dto.type())
                 .priority(dto.priority())

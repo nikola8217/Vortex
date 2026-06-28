@@ -5,6 +5,7 @@ import com.vortex.shared.events.WorkerHeartbeatEvent;
 import com.vortex.shared.kafka.KafkaProducer;
 import com.vortex.worker.business.ports.IWorkerRepository;
 import com.vortex.worker.core.entities.WorkerEntity;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,25 +31,27 @@ public class HeartbeatService {
 
     private UUID workerId;
 
-    @jakarta.annotation.PostConstruct
+    @PostConstruct
     public void registerWorker() {
-
-        WorkerEntity worker = new WorkerEntity(
-                UUID.randomUUID(),
-                host,
-                port,
-                WorkerStatus.IDLE
-        );
-
-        WorkerEntity saved = workerRepository.save(worker);
-
-        this.workerId = saved.getId();
-
-        log.info("Worker registered with id: {}", workerId);
+        try {
+            WorkerEntity worker = new WorkerEntity(
+                    UUID.randomUUID(),
+                    host,
+                    port,
+                    WorkerStatus.IDLE
+            );
+            WorkerEntity saved = workerRepository.save(worker);
+            this.workerId = saved.getId();
+            log.info("Worker registered with id: {}", workerId);
+        } catch (Exception e) {
+            log.error("Failed to register worker: {}", e.getMessage());
+            this.workerId = UUID.randomUUID();
+        }
     }
 
     @Scheduled(fixedDelay = 5000)
     public void sendHeartbeat() {
+        if (workerId == null) return;
 
         WorkerHeartbeatEvent event = new WorkerHeartbeatEvent(
                 UUID.randomUUID(),
@@ -58,9 +61,7 @@ public class HeartbeatService {
                 WorkerStatus.IDLE,
                 LocalDateTime.now()
         );
-
         kafkaProducer.send("worker-heartbeat", workerId.toString(), event);
-
         log.debug("Heartbeat sent for worker: {}", workerId);
     }
 

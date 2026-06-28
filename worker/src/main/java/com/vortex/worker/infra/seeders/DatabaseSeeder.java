@@ -19,21 +19,25 @@ public class DatabaseSeeder {
 
     @PostConstruct
     public void seed() {
-        List<DatabaseInstance> existing = instanceRepository.findAll();
-        if (!existing.isEmpty()) {
-            log.info("Database instances already seeded, skipping...");
-            return;
+        try {
+            List<DatabaseInstance> existing = instanceRepository.findAll();
+            if (!existing.isEmpty()) {
+                log.info("Database instances already seeded, skipping...");
+                return;
+            }
+
+            List<DatabaseInstance> instances = List.of(
+                    new DatabaseInstance(UUID.randomUUID(), "db-primary", "192.168.1.1", "ONLINE"),
+                    new DatabaseInstance(UUID.randomUUID(), "db-replica-1", "192.168.1.2", "ONLINE"),
+                    new DatabaseInstance(UUID.randomUUID(), "db-replica-2", "192.168.1.3", "ONLINE"),
+                    new DatabaseInstance(UUID.randomUUID(), "db-analytics", "192.168.1.4", "ONLINE"),
+                    new DatabaseInstance(UUID.randomUUID(), "db-reporting", "192.168.1.5", "OFFLINE")
+            );
+
+            instances.forEach(instanceRepository::save);
+            log.info("Seeded {} database instances", instances.size());
+        } catch (Exception e) {
+            log.warn("Seeding skipped, another instance already seeded: {}", e.getMessage());
         }
-
-        List<DatabaseInstance> instances = List.of(
-                new DatabaseInstance(UUID.randomUUID(), "db-primary", "192.168.1.1", "ONLINE"),
-                new DatabaseInstance(UUID.randomUUID(), "db-replica-1", "192.168.1.2", "ONLINE"),
-                new DatabaseInstance(UUID.randomUUID(), "db-replica-2", "192.168.1.3", "ONLINE"),
-                new DatabaseInstance(UUID.randomUUID(), "db-analytics", "192.168.1.4", "ONLINE"),
-                new DatabaseInstance(UUID.randomUUID(), "db-reporting", "192.168.1.5", "OFFLINE")
-        );
-
-        instances.forEach(instanceRepository::save);
-        log.info("Seeded {} database instances", instances.size());
     }
 }

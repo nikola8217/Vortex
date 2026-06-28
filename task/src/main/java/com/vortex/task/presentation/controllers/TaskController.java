@@ -33,8 +33,8 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskResponse>> getTasks(
-            @RequestParam(required = false) TaskStatus status,
-            @RequestParam(required = false) TaskPriority priority) {
+            @RequestParam(name = "status", required = false) TaskStatus status,
+            @RequestParam(name = "priority", required = false) TaskPriority priority) {
         List<TaskResponse> responses = taskService.getTasks(status, priority)
                 .stream()
                 .map(TaskResponse::from)
