@@ -17,6 +17,7 @@
         <module>worker</module>
         <module>task</module>
         <module>observability</module>
+        <module>app</module>
     </modules>
 
     <properties>

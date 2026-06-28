@@ -1,8 +1,6 @@
 spring:
   application:
-    name: scheduler
-  kafka:
-    bootstrap-servers: localhost:9092
+    name: vortex
   datasource:
     url: jdbc:postgresql://localhost:5432/vortex
     username: vortex
@@ -14,6 +12,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
   quartz:
     job-store-type: memory
     properties:
@@ -23,3 +23,23 @@ spring:
 scheduler:
   leader-election:
     lock-id: 123456789
+
+worker:
+  host: localhost
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      show-details: always
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+server:
+  port: 8080

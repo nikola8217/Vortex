@@ -1,4 +1,4 @@
-package com.vortex.worker.infra.config;
+package com.vortex.app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -41,7 +41,7 @@ public class KafkaConfig {
     public ConsumerFactory<String, Object> consumerFactory(ObjectMapper objectMapper) {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "worker-service");
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, "vortex");
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         JsonDeserializer<Object> deserializer = new JsonDeserializer<>(objectMapper);
